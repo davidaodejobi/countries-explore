@@ -1,0 +1,20 @@
+{
+  "desc": "Saya seorang pengembang seluler kreatif dengan 2+ tahun pengalaman membangun aplikasi seluler untuk Android dan iOS. Saya telah mengerjakan beberapa proyek yang berbeda, mulai dari ukuran kecil hingga besar. Tidak hanya itu, tetapi saya memiliki hasrat untuk membangun pengalaman pengguna yang hebat, dan saya selalu mencari peluang baru untuk belajar dan tumbuh sebagai pengembang.",
+  "@desc": {
+    "description": "details about my work experiences"
+  },
+  "greetings": "Hai yang di sana,",
+  "@greetings": {
+    "description": "greet the user"
+  },
+  "im": "Saya {name}",
+  "@im": {
+    "description": "just im"
+  },
+  "project": "Proyek",
+  "@project": {},
+  "title": "Pengembang Seluler",
+  "@title": {
+    "description": "developer stack\n"
+  }
+}

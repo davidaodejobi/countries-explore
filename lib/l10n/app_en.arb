@@ -1,0 +1,27 @@
+{
+  "desc": "I'm a creative mobile developer with 2+ years of experience building mobile applications for Android and iOS. I have worked on a few different projects, ranging in size from small to large. Not only that, but I have a passion for building great user experiences, and I am always looking for new opportunities to learn and grow as a developer.",
+  "@desc": {
+    "description": "details about my work experiences"
+  },
+  "greetings": "Hi there,",
+  "@greetings": {
+    "description": "greet the user"
+  },
+  "im": "I'm {name}.",
+  "@im": {
+    "description": "just im",
+    "placeholders": {
+      "name": {
+        "name": {
+          "type": "String"
+        }
+      }
+    }
+  },
+  "project": "Project",
+  "@project": {},
+  "title": "Mobile Developer",
+  "@title": {
+    "description": "developer stack"
+  }
+}

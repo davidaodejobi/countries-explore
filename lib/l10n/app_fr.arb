@@ -1,0 +1,20 @@
+{
+  "desc": "Je suis un développeur mobile créatif avec 2+ ans d'expérience dans la création d'applications mobiles pour Android et iOS. J'ai travaillé sur différents projets, allant du petit au grand. Non seulement cela, mais j'ai une passion pour la création d'expériences utilisateur exceptionnelles, et je suis toujours à la recherche de nouvelles opportunités d'apprendre et de grandir en tant que développeur.",
+  "@desc": {
+    "description": "details about my work experiences"
+  },
+  "greetings": "Salut,",
+  "@greetings": {
+    "description": "greet the user"
+  },
+  "im": "Je suis {name}.",
+  "@im": {
+    "description": "just im"
+  },
+  "project": "Projet",
+  "@project": {},
+  "title": "Développeur mobile",
+  "@title": {
+    "description": "developer stack"
+  }
+}
