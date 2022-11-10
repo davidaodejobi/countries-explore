@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 
+import 'package:explore/modules/details/details.dart';
 import 'package:flutter/material.dart';
 
 import 'package:explore/constant/helper/helper.dart';
@@ -127,6 +128,7 @@ class Home extends StatelessWidget {
                 ),
               ],
             ),
+            const YMargin(10),
             Expanded(
               child: ListView.builder(
                 itemCount: dummuyCountries.length,
@@ -141,36 +143,47 @@ class Home extends StatelessWidget {
                             ),
                       ),
                       const YMargin(10),
-                      Row(
-                        children: [
-                          Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(12),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Details(),
                             ),
-                          ),
-                          const XMargin(10),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Country Name',
-                                  style: Theme.of(context).textTheme.bodyText1),
-                              const YMargin(5),
-                              Text(
-                                'Country Capital',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(
-                                      // fontWeight: FontWeight.w300,
-                                      color: AppColor.lightGreyColor,
-                                    ),
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                            ],
-                          )
-                        ],
+                            ),
+                            const XMargin(10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Country Name',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1),
+                                const YMargin(5),
+                                Text(
+                                  'Country Capital',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(
+                                        // fontWeight: FontWeight.w300,
+                                        color: AppColor.lightGreyColor,
+                                      ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                       const YMargin(10),
                     ],

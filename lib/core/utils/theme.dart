@@ -22,6 +22,15 @@ class AppTheme extends ChangeNotifier {
       appBarTheme: const AppBarTheme(
         color: AppColor.lightBackgroundColor,
         elevation: 0,
+        iconTheme: IconThemeData(
+          color: AppColor.lightSecondaryColor,
+        ),
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          color: AppColor.lightSecondaryColor,
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+        ),
       ),
       textTheme: const TextTheme(
         headline1: TextStyle(
