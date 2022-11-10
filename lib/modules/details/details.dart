@@ -12,7 +12,13 @@ class Details extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Details'),
+        title: Text(
+          'Details',
+          style: Theme.of(context).textTheme.headline4!.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+        ),
       ),
       body: ListView(
         children: [

@@ -22,7 +22,7 @@ class DetailsText extends StatelessWidget {
           TextSpan(
             text: value,
             style: Theme.of(context).textTheme.headline6!.copyWith(
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.w200,
                 ),
           ),
         ],

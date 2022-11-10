@@ -101,6 +101,23 @@ class Home extends StatelessWidget {
                             Theme.of(context).scaffoldBackgroundColor,
                         context: context,
                         builder: (context) {
+                          var languages = [
+                            'English',
+                            'French',
+                            'Spanish',
+                            'German',
+                            'Italian',
+                            'Portuguese',
+                            'Russian',
+                            'Chinese',
+                            'Japanese',
+                            'Korean',
+                            'Arabic',
+                            'Hindi',
+                            'Turkish',
+                            'Dutch',
+                            'Polish',
+                          ];
                           return Column(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
@@ -117,41 +134,37 @@ class Home extends StatelessWidget {
                                           fontWeight: FontWeight.w700,
                                         ),
                                   ),
-                                  Container(
-                                    height: 24,
-                                    width: 24,
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).primaryColor,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: const Icon(
-                                      Icons.close,
-                                      color: Colors.white,
-                                      size: 12,
-                                    ),
-                                  )
+                                  const ModalCloseButton()
                                 ],
                               ),
-                              const YMargin(20),
-                              // Row(
-                              //   mainAxisAlignment:
-                              //       MainAxisAlignment.spaceEvenly,
-                              //   children: [
-                              //     LanguageButton(
-                              //       language: 'English',
-                              //       onTap: () {},
-                              //     ),
-                              //     LanguageButton(
-                              //       language: 'French',
-                              //       onTap: () {},
-                              //     ),
-                              //     LanguageButton(
-                              //       language: 'Spanish',
-                              //       onTap: () {},
-                              //     ),
-                              //   ],
-                              // ),
-                              const YMargin(20),
+                              const YMargin(8.0),
+                              Expanded(
+                                child: ListView(
+                                  children: [
+                                    for (var language in languages)
+                                      RadioListTile(
+                                        visualDensity: const VisualDensity(
+                                          horizontal:
+                                              VisualDensity.minimumDensity,
+                                          vertical:
+                                              VisualDensity.minimumDensity,
+                                        ),
+                                        value: language,
+                                        groupValue: languages,
+                                        onChanged: (value) {},
+                                        title: Text(
+                                          'English',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline6!
+                                              .copyWith(
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ).paddingAll(
                             padding: 16.0,
