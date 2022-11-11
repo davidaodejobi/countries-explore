@@ -1,3 +1,4 @@
+import 'package:explore/modules/home/view_model/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,7 @@ class Explore extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<AppTheme>(create: (_) => AppTheme()),
         ChangeNotifierProvider<LocaleProvider>(create: (_) => LocaleProvider()),
+        ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider()),
       ],
       child: Consumer2<AppTheme, LocaleProvider>(
         builder: (context, theme, locale, child) {

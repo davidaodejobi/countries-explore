@@ -1,12 +1,17 @@
-import 'package:explore/constant/constant.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
+import 'package:explore/constant/constant.dart';
+import 'package:explore/core/models/countries_model.dart';
 
 import '../../../shared/shared.dart';
 import '../../details/details.dart';
 
 class ListOfCountries extends StatelessWidget {
+  final CountryModel country;
   const ListOfCountries({
     Key? key,
+    required this.country,
   }) : super(key: key);
 
   @override
@@ -44,16 +49,17 @@ class ListOfCountries extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Country Name',
+                  Text(country.name!.common!,
                       style: Theme.of(context).textTheme.bodyText1),
                   const YMargin(5),
-                  Text(
-                    'Country Capital',
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          // fontWeight: FontWeight.w300,
-                          color: AppColor.lightGreyColor,
-                        ),
-                  ),
+                  if (country.capital!.isNotEmpty)
+                    Text(
+                      country.capital!.first,
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            // fontWeight: FontWeight.w300,
+                            color: AppColor.lightGreyColor,
+                          ),
+                    ),
                 ],
               )
             ],

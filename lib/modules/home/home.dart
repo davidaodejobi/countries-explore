@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
 
 import 'package:explore/core/core.dart';
 import 'package:flutter/material.dart';
@@ -8,44 +7,15 @@ import 'package:explore/shared/shared.dart';
 import 'package:provider/provider.dart';
 
 import '../../constant/constant.dart';
-import '../../core/models/countries.dart';
+import 'view_model/home_provider.dart';
 import 'widgets/widgets.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
-  groupCountries() {
-    List countries = dummuyCountries;
-    //group countries by first letter
-    Map<String, List> groupedCountries = {};
-    for (var country in countries) {
-      String firstLetter = country.name[0].toUpperCase();
-      if (groupedCountries.containsKey(firstLetter)) {
-        groupedCountries[firstLetter]!.add(country);
-      } else {
-        groupedCountries[firstLetter] = [country];
-      }
-    }
-
-    Map<String, List> sortedMap = {};
-    for (var key in groupedCountries.keys.toList()..sort()) {
-      sortedMap[key] = groupedCountries[key]!;
-    }
-
-    //print grouped countries
-    log('key: ${sortedMap.keys.length}');
-    for (var key in sortedMap.keys) {
-      log('key: $key');
-      for (var country in sortedMap[key]!) {
-        log('country: ${country.name}');
-      }
-    }
-
-    //print grouped countries in linear time
-  }
-
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<HomeProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -176,7 +146,7 @@ class Home extends StatelessWidget {
                 OptionButton(
                   icon: Icons.filter_alt_outlined,
                   onTap: () {
-                    groupCountries();
+                    // groupCountries();
                   },
                   text: 'Filter',
                 ),
@@ -184,12 +154,28 @@ class Home extends StatelessWidget {
             ),
             const YMargin(10),
             Expanded(
-              child: ListView.builder(
-                itemCount: dummuyCountries.length,
-                itemBuilder: (context, index) {
-                  return const ListOfCountries();
-                },
-              ),
+              child: Consumer(builder: (context, HomeProvider value, child) {
+                print('value.countries: ${value.countries}');
+                return FutureBuilder(
+                  future: provider.getFiles(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        itemCount: value.countries.length,
+                        itemBuilder: (context, index) {
+                          return ListOfCountries(
+                            country: value.countries[index],
+                          );
+                        },
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                );
+              }),
             ),
           ],
         ).paddingHorizontal(padding: 16),
