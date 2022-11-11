@@ -161,10 +161,12 @@ class Home extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return ListView.builder(
-                        itemCount: value.countries.length,
+                        itemCount: value.countriesKeys.length,
                         itemBuilder: (context, index) {
                           return ListOfCountries(
-                            country: value.countries[index],
+                            countriesKeys: value.countriesKeys,
+                            countriesValues: value.countriesValues,
+                            index: index,
                           );
                         },
                       );
