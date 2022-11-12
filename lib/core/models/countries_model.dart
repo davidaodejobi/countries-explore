@@ -8,13 +8,13 @@ class CountryModel {
   bool? independent;
   String? status;
   bool? unMember;
-  Currencies? currencies;
+  Map<String, Curr>? currencies;
   Idd? idd;
   List<String>? capital;
   List<String>? altSpellings;
   String? region;
   String? subregion;
-  Languages? languages;
+  Map<String, String>? languages;
   Translations? translations;
   List<double>? latlng;
   bool? landlocked;
@@ -80,7 +80,8 @@ class CountryModel {
     status = json['status'];
     unMember = json['unMember'];
     currencies = json['currencies'] != null
-        ? Currencies.fromJson(json['currencies'])
+        ? (json['currencies'] as Map<String, dynamic>).map(
+            (k, v) => MapEntry(k, Curr.fromJson(v as Map<String, dynamic>)))
         : null;
     idd = json['idd'] != null ? Idd.fromJson(json['idd']) : null;
     // capital = json['capital'].cast<String>();
@@ -93,7 +94,8 @@ class CountryModel {
     region = json['region'];
     subregion = json['subregion'];
     languages = json['languages'] != null
-        ? Languages.fromJson(json['languages'])
+        ? Map.from(json['languages'])
+            .map((k, v) => MapEntry<String, String>(k, v))
         : null;
     translations = json['translations'] != null
         ? Translations.fromJson(json['translations'])
@@ -136,7 +138,7 @@ class CountryModel {
     data['status'] = status;
     data['unMember'] = unMember;
     if (currencies != null) {
-      data['currencies'] = currencies!.toJson();
+      data['currencies'] = currencies!.map((k, v) => MapEntry(k, v.toJson()));
     }
     if (idd != null) {
       data['idd'] = idd!.toJson();
@@ -146,7 +148,7 @@ class CountryModel {
     data['region'] = region;
     data['subregion'] = subregion;
     if (languages != null) {
-      data['languages'] = languages!.toJson();
+      data['languages'] = languages;
     }
     if (translations != null) {
       data['translations'] = translations!.toJson();
@@ -248,31 +250,31 @@ class Eng {
   }
 }
 
-class Currencies {
-  BBD? bBD;
+// class Currencies {
+//   BBD? bBD;
 
-  Currencies({this.bBD});
+//   Currencies({this.bBD});
 
-  Currencies.fromJson(Map<String, dynamic> json) {
-    bBD = json['BBD'] != null ? BBD.fromJson(json['BBD']) : null;
-  }
+//   Currencies.fromJson(Map<String, dynamic> json) {
+//     bBD = json['BBD'] != null ? BBD.fromJson(json['BBD']) : null;
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (bBD != null) {
-      data['BBD'] = bBD!.toJson();
-    }
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     if (bBD != null) {
+//       data['BBD'] = bBD!.toJson();
+//     }
+//     return data;
+//   }
+// }
 
-class BBD {
+class Curr {
   String? name;
   String? symbol;
 
-  BBD({this.name, this.symbol});
+  Curr({this.name, this.symbol});
 
-  BBD.fromJson(Map<String, dynamic> json) {
+  Curr.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     symbol = json['symbol'];
   }
@@ -300,28 +302,28 @@ class Idd {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['root'] = root;
     data['suffixes'] = suffixes;
     return data;
   }
 }
 
-class Languages {
-  String? eng;
+// class Languages {
+//   String? eng;
 
-  Languages({this.eng});
+//   Languages({this.eng});
 
-  Languages.fromJson(Map<String, dynamic> json) {
-    eng = json['eng'];
-  }
+//   Languages.fromJson(Map<String, dynamic> json) {
+//     eng = json['eng'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['eng'] = eng;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['eng'] = eng;
+//     return data;
+//   }
+// }
 
 class Translations {
   Eng? ara;

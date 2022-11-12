@@ -40,50 +40,56 @@ class ListOfCountries extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Details(),
+                      builder: (context) => Details(
+                        country: countriesValues[index][i],
+                      ),
                     ),
                   );
                 },
                 child: Row(
                   children: [
-                    CachedNetworkImage(
-                      imageUrl: countriesValues[index][i].flags!.png!,
-                      imageBuilder: (context, imageProvider) => Container(
-                        width: 40.0,
-                        height: 40.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      placeholder: (context, url) => Center(
-                        child: Container(
-                          height: 40,
-                          width: 40,
+                    Hero(
+                      tag: countriesValues[index][i].flags!.png!,
+                      child: CachedNetworkImage(
+                        imageUrl: countriesValues[index][i].flags!.png!,
+                        imageBuilder: (context, imageProvider) => Container(
+                          width: 40.0,
+                          height: 40.0,
                           decoration: BoxDecoration(
-                            color: Colors.grey,
                             borderRadius: BorderRadius.circular(12),
                             image: DecorationImage(
-                              image: NetworkImage(
-                                countriesValues[index][i].flags!.png!,
-                              ),
+                              image: imageProvider,
+                              fit: BoxFit.cover,
                             ),
                           ),
-                        )
-                            .animate(
-                                onPlay: (controller) => controller.repeat())
-                            .shimmer(
-                              curve: Curves.slowMiddle,
-                              color:
-                                  Theme.of(context).cardColor.withOpacity(0.6),
-                              duration: const Duration(seconds: 1),
+                        ),
+                        placeholder: (context, url) => Center(
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(12),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  countriesValues[index][i].flags!.png!,
+                                ),
+                              ),
                             ),
+                          )
+                              .animate(
+                                  onPlay: (controller) => controller.repeat())
+                              .shimmer(
+                                curve: Curves.slowMiddle,
+                                color: Theme.of(context)
+                                    .cardColor
+                                    .withOpacity(0.6),
+                                duration: const Duration(seconds: 1),
+                              ),
+                        ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
                     ),
                     const XMargin(10),
                     Expanded(
@@ -102,7 +108,6 @@ class ListOfCountries extends StatelessWidget {
                                     .textTheme
                                     .bodyText1!
                                     .copyWith(
-                                      // fontWeight: FontWeight.w300,
                                       color: AppColor.lightGreyColor,
                                       overflow: TextOverflow.ellipsis,
                                     ),
