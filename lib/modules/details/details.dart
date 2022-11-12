@@ -41,65 +41,56 @@ class Details extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DetailsText(
-                      keey: 'Population: ',
-                      value: country.population!.comma.fix)
+                      keey: 'Population: ', value: country.population!.comma)
                   .fixWidget,
-              DetailsText(keey: 'Region: ', value: country.region!.fix)
-                  .fixWidget,
+              DetailsText(keey: 'Region: ', value: country.region!).fixWidget,
               if (country.capital!.isNotEmpty)
-                DetailsText(
-                        keey: 'Capital: ', value: country.capital!.first.fix)
+                DetailsText(keey: 'Capital: ', value: country.capital!.first)
                     .fixWidget,
               DetailsText(
-                      keey: 'Official name: ',
-                      value: country.name!.official!.fix)
+                      keey: 'Official name: ', value: country.name!.official!)
                   .fixWidget,
               const YMargin(20),
               DetailsText(
                       keey: 'Official language: ',
                       value: country
-                          .languages![country.languages!.keys.toList().first]!
-                          .fix)
+                          .languages![country.languages!.keys.toList().first]!)
                   .fixWidget,
               DetailsText(
                       keey: 'Start of the week: ',
-                      value: country.startOfWeek!.capitalise.fix)
+                      value: country.startOfWeek!.capitalise)
                   .fixWidget,
-              DetailsText(keey: 'Subregion: ', value: country.subregion!.fix)
+              DetailsText(keey: 'Subregion: ', value: country.subregion!)
                   .fixWidget,
               DetailsText(
                       keey: 'Independent: ',
                       value: country.independent! ? 'Yes' : 'No')
                   .fixWidget,
               const YMargin(20),
-              DetailsText(keey: 'Area: ', value: country.area!.comma.fix)
-                  .fixWidget,
+              DetailsText(keey: 'Area: ', value: country.area!.comma).fixWidget,
               DetailsText(
                       keey: 'Currency: ',
                       value: country
                           .currencies![country.currencies!.keys.toList().first]!
-                          .name!
-                          .fix)
+                          .name!)
                   .fixWidget,
               DetailsText(
                       keey: 'currency symbol: ',
                       value: country
                           .currencies![country.currencies!.keys.toList().first]!
-                          .symbol!
-                          .fix)
+                          .symbol!)
                   .fixWidget,
               const YMargin(20),
-              DetailsText(
-                      keey: 'Time zone: ', value: country.timezones!.first.fix)
+              DetailsText(keey: 'Time zone: ', value: country.timezones!.first)
                   .fixWidget,
               DetailsText(
                       keey: 'Dialling code: ',
                       value:
-                          '${country.idd!.root!}${country.idd!.suffixes!.first.fix}')
+                          '${country.idd!.root!}${country.idd!.suffixes!.first}')
                   .fixWidget,
               DetailsText(
                       keey: 'Driving side: ',
-                      value: country.car!.side!.capitalise.fix)
+                      value: country.car!.side!.capitalise)
                   .fixWidget,
               const YMargin(20),
             ],
@@ -107,36 +98,5 @@ class Details extends StatelessWidget {
         ],
       ).paddingHorizontal(padding: 16),
     );
-  }
-}
-
-//number with commas
-extension NumberComma on num {
-  String get comma => toString().replaceAllMapped(
-        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-        (Match m) => '${m[1]},',
-      );
-}
-
-//capitalise first letter
-extension Capitalise on String {
-  String get capitalise => '${this[0].toUpperCase()}${substring(1)}';
-}
-
-extension NullFix on String? {
-  String get fix {
-    if (this == null) {
-      return 'N/A';
-    }
-    return this!;
-  }
-}
-
-extension NullFixWidget on Widget? {
-  Widget get fixWidget {
-    if (this == null) {
-      return const SizedBox.shrink();
-    }
-    return this!;
   }
 }

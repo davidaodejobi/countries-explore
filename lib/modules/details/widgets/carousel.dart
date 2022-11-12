@@ -30,7 +30,7 @@ class _CarouselState extends State<Carousel> {
   void initState() {
     super.initState();
     final images = widget.images;
-    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       if (_currentPage <= images.length - 1) {
         _currentPage++;
       } else {

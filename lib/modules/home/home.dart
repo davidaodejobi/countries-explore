@@ -32,16 +32,16 @@ class Home extends StatelessWidget {
                   },
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 8.0,
-                    ),
+                        // horizontal: 16.0,
+                        // vertical: .0,
+                        ),
                     hintText: 'Search',
                     hintStyle: Theme.of(context).textTheme.headline6!.copyWith(
-                          color: value.isDarkTheme
-                              ? Theme.of(context).iconTheme.color
-                              : AppColor.lightGreyColor,
-                          fontWeight: FontWeight.w300,
-                        ),
+                        color: value.isDarkTheme
+                            ? Theme.of(context).iconTheme.color
+                            : AppColor.lightGreyColor,
+                        fontWeight: FontWeight.w300,
+                        height: 0.5),
                     prefixIcon: Icon(
                       Icons.search,
                       color: value.isDarkTheme
@@ -158,52 +158,103 @@ class Home extends StatelessWidget {
             ),
             const YMargin(10),
             Expanded(
-              child: Consumer(builder: (context, HomeProvider value, child) {
-                return FutureBuilder(
-                  future: provider.getFiles(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Stack(
-                        children: [
-                          ListView.builder(
-                            controller: provider.scrollController,
-                            itemCount: value.countriesKeys.length,
-                            itemBuilder: (context, index) {
-                              return ListOfCountries(
-                                countriesKeys: value.countriesKeys,
-                                countriesValues: value.countriesValues,
-                                index: index,
-                              );
-                            },
+              child: provider.status == Status.loading
+                  ? Column(children: [
+                      if (provider.status == Status.loading)
+                        const Expanded(
+                          child: Center(
+                            child: CircularProgressIndicator(),
                           ),
-                          Positioned(
-                            right: 10,
-                            child: ScrollButton(
-                                onPressed: () {
-                                  provider.scrollToTop();
-                                },
-                                icon: Icons.arrow_upward),
-                          ),
-                          Positioned(
-                            right: 10,
-                            bottom: 16,
-                            child: ScrollButton(
-                                onPressed: () {
-                                  provider.scrollToBottom();
-                                },
-                                icon: Icons.arrow_downward),
-                          )
-                        ],
-                      );
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
-                );
-              }),
+                        ),
+                      if (provider.status == Status.error)
+                        const Center(
+                          child: Text('Error'),
+                        ),
+                    ])
+                  : Stack(
+                      children: [
+                        ListView.builder(
+                          controller: provider.scrollController,
+                          itemCount: provider.countriesKeys.length,
+                          itemBuilder: (context, index) {
+                            return ListOfCountries(
+                              countriesKeys: provider.countriesKeys,
+                              countriesValues: provider.countriesValues,
+                              index: index,
+                            );
+                          },
+                        ),
+                        Positioned(
+                          right: 10,
+                          child: ScrollButton(
+                              onPressed: () {
+                                provider.scrollToTop();
+                              },
+                              icon: Icons.arrow_upward),
+                        ),
+                        Positioned(
+                          right: 10,
+                          bottom: 16,
+                          child: ScrollButton(
+                              onPressed: () {
+                                provider.scrollToBottom();
+                              },
+                              icon: Icons.arrow_downward),
+                        )
+                      ],
+                    ),
             ),
+
+            /*
+              FutureBuilder(
+                future: provider.getFiles(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Stack(
+                      children: [
+                        ListView.builder(
+                          controller: provider.scrollController,
+                          itemCount: provider.countriesKeys.length,
+                          itemBuilder: (context, index) {
+                            return ListOfCountries(
+                              countriesKeys: provider.countriesKeys,
+                              countriesValues: provider.countriesValues,
+                              index: index,
+                            );
+                          },
+                        ),
+                        Positioned(
+                          right: 10,
+                          child: ScrollButton(
+                              onPressed: () {
+                                provider.scrollToTop();
+                              },
+                              icon: Icons.arrow_upward),
+                        ),
+                        Positioned(
+                          right: 10,
+                          bottom: 16,
+                          child: ScrollButton(
+                              onPressed: () {
+                                provider.scrollToBottom();
+                              },
+                              icon: Icons.arrow_downward),
+                        )
+                      ],
+                    );
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return const Center(
+                      child: Text('No data'),
+                    );
+                  }
+                },
+              ),
+              */
           ],
         ).paddingHorizontal(padding: 16),
       ),
