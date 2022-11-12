@@ -26,6 +26,10 @@ class Home extends StatelessWidget {
               return SizedBox(
                 height: 40.0,
                 child: TextField(
+                  controller: provider.searchController,
+                  onChanged: (value) {
+                    provider.searchCountries(value);
+                  },
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16.0,
