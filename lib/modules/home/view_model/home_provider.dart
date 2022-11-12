@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:explore/core/models/countries_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class HomeProvider extends ChangeNotifier {
   final Dio _dio = Dio();
@@ -10,6 +11,34 @@ class HomeProvider extends ChangeNotifier {
   Map<String, List> get countriesMap => _countriesMap;
   List<String> get countriesKeys => _countriesMap.keys.toList();
   List<List<CountryModel>> get countriesValues => _countriesMap.values.toList();
+  final scrollController = ScrollController();
+
+  scrollToTop() async {
+    await Future.delayed(const Duration(milliseconds: 100));
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      scrollController.animateTo(scrollController.position.minScrollExtent,
+          duration: const Duration(milliseconds: 10000),
+          curve: Curves.fastOutSlowIn);
+    });
+    notifyListeners();
+    // scrollController.animateTo(
+    //   0.0,
+    //   curve: Curves.easeOut,
+    //   duration: const Duration(milliseconds: 100),
+    // );
+  }
+
+  scrollToBottom() async {
+    await Future.delayed(const Duration(milliseconds: 100));
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 10000),
+        curve: Curves.slowMiddle,
+      );
+    });
+    notifyListeners();
+  }
 
   groupCountries(List<CountryModel> countries) {
     Map<String, List<CountryModel>> groupedCountries = {};

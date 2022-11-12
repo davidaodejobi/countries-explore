@@ -155,20 +155,41 @@ class Home extends StatelessWidget {
             const YMargin(10),
             Expanded(
               child: Consumer(builder: (context, HomeProvider value, child) {
-                print('value.countries: ${value.countries}');
                 return FutureBuilder(
                   future: provider.getFiles(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return ListView.builder(
-                        itemCount: value.countriesKeys.length,
-                        itemBuilder: (context, index) {
-                          return ListOfCountries(
-                            countriesKeys: value.countriesKeys,
-                            countriesValues: value.countriesValues,
-                            index: index,
-                          );
-                        },
+                      return Stack(
+                        children: [
+                          ListView.builder(
+                            controller: provider.scrollController,
+                            itemCount: value.countriesKeys.length,
+                            itemBuilder: (context, index) {
+                              return ListOfCountries(
+                                countriesKeys: value.countriesKeys,
+                                countriesValues: value.countriesValues,
+                                index: index,
+                              );
+                            },
+                          ),
+                          Positioned(
+                            right: 10,
+                            child: ScrollButton(
+                                onPressed: () {
+                                  provider.scrollToTop();
+                                },
+                                icon: Icons.arrow_upward),
+                          ),
+                          Positioned(
+                            right: 10,
+                            bottom: 16,
+                            child: ScrollButton(
+                                onPressed: () {
+                                  provider.scrollToBottom();
+                                },
+                                icon: Icons.arrow_downward),
+                          )
+                        ],
                       );
                     } else {
                       return const Center(
