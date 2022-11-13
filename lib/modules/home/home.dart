@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:explore/core/core.dart';
 import 'package:flutter/material.dart';
-
-import 'package:explore/shared/shared.dart';
 import 'package:provider/provider.dart';
+
+import 'package:explore/core/core.dart';
+import 'package:explore/shared/shared.dart';
 
 import '../../constant/constant.dart';
 import 'view_model/home_provider.dart';
@@ -35,7 +35,7 @@ class Home extends StatelessWidget {
                         // horizontal: 16.0,
                         // vertical: .0,
                         ),
-                    hintText: 'Search',
+                    hintText: 'Search Country',
                     hintStyle: Theme.of(context).textTheme.headline6!.copyWith(
                         color: value.isDarkTheme
                             ? Theme.of(context).iconTheme.color
@@ -67,90 +67,14 @@ class Home extends StatelessWidget {
                 OptionButton(
                   icon: Icons.language,
                   onTap: () {
-                    showModalBottomSheet(
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(20))),
-                        backgroundColor:
-                            Theme.of(context).scaffoldBackgroundColor,
-                        context: context,
-                        builder: (context) {
-                          var languages = [
-                            'English',
-                            'French',
-                            'Spanish',
-                            'German',
-                            'Italian',
-                            'Portuguese',
-                            'Russian',
-                            'Chinese',
-                            'Japanese',
-                            'Korean',
-                            'Arabic',
-                            'Hindi',
-                            'Turkish',
-                            'Dutch',
-                            'Polish',
-                          ];
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Language',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline4!
-                                        .copyWith(
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                  ),
-                                  const ModalCloseButton()
-                                ],
-                              ),
-                              const YMargin(8.0),
-                              Expanded(
-                                child: ListView(
-                                  children: [
-                                    for (var language in languages)
-                                      RadioListTile(
-                                        visualDensity: const VisualDensity(
-                                          horizontal:
-                                              VisualDensity.minimumDensity,
-                                          vertical:
-                                              VisualDensity.minimumDensity,
-                                        ),
-                                        value: language,
-                                        groupValue: languages,
-                                        onChanged: (value) {},
-                                        title: Text(
-                                          'English',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline6!
-                                              .copyWith(
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ).paddingAll(
-                            padding: 16.0,
-                          );
-                        });
+                    languageModelBottomSheet(context);
                   },
                   text: 'EN',
                 ),
                 OptionButton(
                   icon: Icons.filter_alt_outlined,
                   onTap: () {
-                    // groupCountries();
+                    filterModalBottomSheet(context);
                   },
                   text: 'Filter',
                 ),
@@ -259,5 +183,177 @@ class Home extends StatelessWidget {
         ).paddingHorizontal(padding: 16),
       ),
     );
+  }
+
+  Future<dynamic> filterModalBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+        enableDrag: true,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        context: context,
+        builder: (context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Filter',
+                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
+                  const ModalCloseButton()
+                ],
+              ),
+              const YMargin(8.0),
+              Consumer<HomeProvider>(
+                builder: (_, value, __) {
+                  return Column(
+                    children: [
+                      ExpansionTileWidget(
+                        listOfFilters: value.continent,
+                        hasExpanded: value.isExpanded[0],
+                        onTap: () {
+                          value.expand(0);
+                        },
+                        title: 'continent',
+                      ),
+                      ExpansionTileWidget(
+                        listOfFilters: value.timeZones,
+                        hasExpanded: value.isExpanded[1],
+                        onTap: () {
+                          value.expand(1);
+                        },
+                        title: 'time zone',
+                      ),
+                      const YMargin(8.0),
+                      AnimatedContainer(
+                        duration: const Duration(seconds: 1),
+                        curve: Curves.easeInOut,
+                        height: value.isExpanded.contains(true) ? 40 : 0,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  height: 40.0,
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      borderRadius: BorderRadius.circular(5),
+                                      border: Border.all(
+                                          color: Theme.of(context)
+                                              .iconTheme
+                                              .color!,
+                                          width: 1.0)),
+                                  child: Center(
+                                    child: Text(
+                                      'Reset',
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const XMargin(24.0),
+                            Expanded(
+                              flex: 5,
+                              child: SizedBox(
+                                height: 40.0,
+                                child: ElevatedButton(
+                                  onPressed: () {},
+                                  child: const Text('Show Results'),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  );
+                },
+              )
+            ],
+          ).paddingAll(
+            padding: 16.0,
+          );
+        });
+  }
+
+  Future<dynamic> languageModelBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        context: context,
+        builder: (context) {
+          var languages = [
+            'English',
+            'French',
+            'Spanish',
+            'German',
+            'Italian',
+            'Portuguese',
+            'Russian',
+            'Chinese',
+            'Japanese',
+            'Korean',
+            'Arabic',
+            'Hindi',
+            'Turkish',
+            'Dutch',
+            'Polish',
+          ];
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Language',
+                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
+                  const ModalCloseButton()
+                ],
+              ),
+              const YMargin(8.0),
+              Expanded(
+                child: ListView(
+                  children: [
+                    for (var language in languages)
+                      RadioListTile(
+                        visualDensity: const VisualDensity(
+                          horizontal: VisualDensity.minimumDensity,
+                          vertical: VisualDensity.minimumDensity,
+                        ),
+                        value: language,
+                        groupValue: languages,
+                        onChanged: (value) {},
+                        title: Text(
+                          'English',
+                          style:
+                              Theme.of(context).textTheme.headline6!.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ).paddingAll(
+            padding: 16.0,
+          );
+        });
   }
 }

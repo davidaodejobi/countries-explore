@@ -23,15 +23,46 @@ class HomeProvider extends ChangeNotifier {
     //   });
   }
 
+  final List<String> _continent = [];
+  // List<Map<String, dynamic>> _countriesfff = [];
+  final List<String> _timeZones = [];
+  List<CountryModel> _countries = [];
+  final List<CountryModel> _countriesCopy = [];
+  final scrollController = ScrollController();
+  final searchController = TextEditingController();
   final Map<String, List<CountryModel>> _countriesMap = {};
+  final List<bool> _isExpanded = [false, false];
+  Status get status => _status;
+  // List<bool> continentTracker = [];
+  // List<bool> timeZonesTracker = [];
+  List<Map<String, dynamic>> _continentTracker = [];
+  // List<bool> get continentTracker => _continentTracker;
+
+  List<String> get continent => _continent;
+  List<String> get timeZones => _timeZones;
+  List<CountryModel> get countries => _countries;
   Map<String, List> get countriesMap => _countriesMap;
   List<String> get countriesKeys => _countriesMap.keys.toList();
   List<List<CountryModel>> get countriesValues => _countriesMap.values.toList();
-  final scrollController = ScrollController();
-  final searchController = TextEditingController();
   Status _status = Status.success;
+  List<bool> get isExpanded => _isExpanded;
 
-  Status get status => _status;
+  filterTracker() {
+    // continentTracker = List.generate(_continent.length, (index) => false);
+    // timeZonesTracker = List.generate(_timeZones.length, (index) => false);
+    _continentTracker = List.generate(
+        _continent.length,
+        (index) => {
+              'continent': _continent[index],
+              'isExpanded': false,
+            });
+    print('_continentTracker: $_continentTracker');
+  }
+
+  expand(int index) {
+    _isExpanded[index] = !_isExpanded[index];
+    notifyListeners();
+  }
 
   scrollToTop() async {
     await Future.delayed(const Duration(milliseconds: 100));
@@ -40,11 +71,6 @@ class HomeProvider extends ChangeNotifier {
           duration: const Duration(milliseconds: 10000),
           curve: Curves.fastOutSlowIn);
     });
-    // scrollController.animateTo(
-    //   0.0,
-    //   curve: Curves.easeOut,
-    //   duration: const Duration(milliseconds: 100),
-    // );
   }
 
   scrollToBottom() async {
@@ -58,31 +84,6 @@ class HomeProvider extends ChangeNotifier {
     });
     notifyListeners();
   }
-
-  /*
-    List<SomeName> academy = <SomeName>[];
-  ///this is going to be the default list that 
-  ///will get most of the work done
-  List<SomeName> academyOrigin = <SomeName>[];
-  ///this is the list that will be used to search
-  ///and filter the list
-
-  searchAcademy({String search}) {
-    academy.clear();
-    ///this is going to clear the list
-    academyOrigin.forEach((element) {
-      ///this is going to loop through the list
-      ///and check if the name of the academy
-      ///contains the search
-      if (element.name.toLowerCase().contains(search.toLowerCase())) {
-        academy.add(element);
-      }
-    });
-    notifyListeners();
-    ///notifyListeners makes sure that the widget is 
-    ///rebuilt and the list is updated
-  }
-  */
 
   searchCountries(String query) {
     // _countriesCopy.clear();
@@ -115,19 +116,14 @@ class HomeProvider extends ChangeNotifier {
     }).toList();
 
     _countries = suggestions;
-    // for (var element in _countries) {
-    //   log(element.name!.common!);
-    // }
     groupCountries(_countries);
     notifyListeners();
   }
 
   groupCountries(List<CountryModel> countries) {
-    log('countries grouped: ${countries.length}');
     Map<String, List<CountryModel>> groupedCountries = {};
     _countriesMap.clear();
     for (var country in countries) {
-      log('country: $country');
       String firstLetter = country.name!.common![0].toUpperCase();
       if (groupedCountries.containsKey(firstLetter)) {
         groupedCountries[firstLetter]!.add(country);
@@ -142,15 +138,10 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  List<CountryModel> _countries = [];
-  final List<CountryModel> _countriesCopy = [];
-  List<CountryModel> get countries => _countries;
-
   Future getFiles() async {
     _status = Status.loading;
     log('_status: $_status');
     try {
-      // Response data = await _dio.get('https://restcountries.com/v3.1/all');
       final data =
           await http.get(Uri.parse('https://restcountries.com/v3.1/all'));
       log('data: ${data.statusCode}');
@@ -160,8 +151,21 @@ class HomeProvider extends ChangeNotifier {
       for (var country in countries) {
         _countries.add(country);
         _countriesCopy.add(country);
-        // print('country.flags.png: ${country.flags!.png}');
+        if (_continent.contains(country.continents![0])) {
+          continue;
+        } else {
+          _continent.add(country.continents![0]);
+        }
       }
+
+      for (var country in countries) {
+        if (_timeZones.contains(country.timezones![0])) {
+          continue;
+        } else {
+          _timeZones.add(country.timezones![0]);
+        }
+      }
+      filterTracker();
       groupCountries(countries);
       _status = Status.success;
       log('_status: $_status');
@@ -173,7 +177,6 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 }
-
 
 //* search
 //* https://restcountries.com/v3.1/name/nigeria?fullText=true

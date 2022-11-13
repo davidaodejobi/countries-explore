@@ -28,7 +28,7 @@ class Explore extends StatelessWidget {
         builder: (context, theme, locale, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Portfolio',
+            title: 'Explore',
             darkTheme: AppTheme.dark(),
             theme: AppTheme.light(),
             themeMode: theme.currentTheme,

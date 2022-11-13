@@ -18,8 +18,8 @@ class ModalCloseButton extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(5),
         child: Container(
-          height: 24,
-          width: 24,
+          height: 16,
+          width: 16,
           decoration: BoxDecoration(
             color: value.isDarkTheme
                 ? AppColor.darkPlanetBgColor
