@@ -36,29 +36,26 @@ cached_network_image: to cache images and avoid repeated downloads and unnecessa
 
 ## Design Description
 
-
-The portrait mode, uses a Silver app bar, and I used the values gotten while scrolling to move some of the object(something I saw in a tutorial months ago). Other things are pretty much widgets with either a normal container or glasmorphic design.
-
-For the landscape, it something I just thought of from the air, sketched it out and build. Although, there were lots of modification along the way cause there wasn't a design to follow.
+The user can view th list of countries on the home page, change to light and dark them, and school through the list of alphabetically arranged list of countries. Also, on the details page, the user get a carousel kind of effect to automatically show the flag and coat of arm while the list contains useful details about the country.
 ## Feature would like to add ...
 
-- I would have love to fix 2 UI bugs(minor) on the app (1. Text not responding to dark theme text in drop down when selecting localization, 2. In the landscape mode, I wrote a loop to get the project cards and I did something there that wasn't dynamic with kinda wll introduct a divider bug)
+- I was busy so I couldn't add filter for timezone which I already started to implement.
 
-- Make animation better by reading more about how stacks and animations work.
+- Add localization to practice what I did in the last project.
 
-- Add languages such as Hausa, Igbo, and Yoruba in L10n.
+- Store the data in a local DB such a Hive to avoid some busy and stress (best for simple apps like this).
 
-- Try to come up with a page for work experience
 ## Link to APK file
 
 - [Click to download from drive](https://drive.google.com/file/d/1ylS7RdfIlutgw_08PBDFd1jIFmmF7LWG/view?usp=sharing)
 ## Challenges
 
-There are two main challenges I faced while working on the task: 
+There are three main challenges I faced while working on the task: 
 
 
 - Filter without storing in a local DB or API
-- Trying to build a google UI, less distracting and classic kind of animation. Combining all of those, even makes it more difficult to build and implement but thanks to Google. and Mr. Sleepless nights 🖤).
+- Writing a funny algorithm to group data alphabetically and also show that on the UI.
+- Trying to build a clean and smooth UI.
 
 The other boss challenge is juggling the tasks with other commitments (❁´◡`❁).
 ## Run Locally
