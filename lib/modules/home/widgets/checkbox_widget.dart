@@ -17,6 +17,7 @@ class CheckBoxWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // log(check.toString());
     return Consumer(
       builder: (_, AppTheme theme, __) {
         return GestureDetector(

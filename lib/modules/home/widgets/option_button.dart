@@ -23,9 +23,9 @@ class OptionButton extends StatelessWidget {
       child: Consumer(builder: (context, AppTheme theme, child) {
         return Container(
           height: 30.0,
-          margin: const EdgeInsets.only(
-            top: 12.0,
-          ),
+          // margin: const EdgeInsets.only(
+          //   top: 12.0,
+          // ),
           decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
             border: Border.all(

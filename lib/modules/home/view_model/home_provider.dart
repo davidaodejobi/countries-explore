@@ -11,20 +11,9 @@ enum Status { loading, success, error }
 class HomeProvider extends ChangeNotifier {
   HomeProvider() {
     getFiles();
-    //? hide and show the loading scroll button--- great to have after completing the app
-    //  scrollController..addListener(() {
-    //     setState(() {
-    //       if (_scrollController.offset >= 400) {
-    //         _showBackToTopButton = true; // show the back-to-top button
-    //       } else {
-    //         _showBackToTopButton = false; // hide the back-to-top button
-    //       }
-    //     });
-    //   });
   }
 
   final List<String> _continent = [];
-  // List<Map<String, dynamic>> _countriesfff = [];
   final List<String> _timeZones = [];
   List<CountryModel> _countries = [];
   final List<CountryModel> _countriesCopy = [];
@@ -33,13 +22,12 @@ class HomeProvider extends ChangeNotifier {
   final Map<String, List<CountryModel>> _countriesMap = {};
   final List<bool> _isExpanded = [false, false];
   Status get status => _status;
-  // List<bool> continentTracker = [];
-  // List<bool> timeZonesTracker = [];
-  List<Map<String, dynamic>> _continentTracker = [];
-  // List<bool> get continentTracker => _continentTracker;
+  // final StorageProvider _storageService = StorageProvider();
 
-  List<String> get continent => _continent;
-  List<String> get timeZones => _timeZones;
+  List<Map<String, dynamic>> _continentTracker = [];
+  List<Map<String, dynamic>> _timeZonesTracker = [];
+  List<Map<String, dynamic>> get timeZonesTracker => _timeZonesTracker;
+  List<Map<String, dynamic>> get continentTracker => _continentTracker;
   List<CountryModel> get countries => _countries;
   Map<String, List> get countriesMap => _countriesMap;
   List<String> get countriesKeys => _countriesMap.keys.toList();
@@ -48,15 +36,69 @@ class HomeProvider extends ChangeNotifier {
   List<bool> get isExpanded => _isExpanded;
 
   filterTracker() {
-    // continentTracker = List.generate(_continent.length, (index) => false);
-    // timeZonesTracker = List.generate(_timeZones.length, (index) => false);
     _continentTracker = List.generate(
         _continent.length,
         (index) => {
-              'continent': _continent[index],
-              'isExpanded': false,
+              'key': _continent[index],
+              'selected': false,
             });
-    print('_continentTracker: $_continentTracker');
+
+    _timeZonesTracker = List.generate(
+        _timeZones.length,
+        (index) => {
+              'key': _timeZones[index],
+              'selected': false,
+            });
+  }
+
+  toggleFilterTracker(int index) {
+    _continentTracker[index]['selected'] =
+        !_continentTracker[index]['selected'];
+    notifyListeners();
+  }
+
+  someMethod() {
+    _status = Status.loading;
+    List<CountryModel> bob = [];
+    List temp = [];
+    log(_countries.isEmpty.toString());
+    log('_countriesCopy: ${_countriesCopy.length}');
+    // bool isAllUnchecked = true;
+    // // _continentTracker.where((element) => () {});
+    // for (var con in _continentTracker) {
+    //   if (con['selected'] == true) {
+    //     isAllUnchecked = false;
+    //     break;
+    //   }
+    // }
+    for (var element in _continentTracker) {
+      if (element['selected'] == true) {
+        temp.add(true);
+      }
+    }
+    _countries.clear();
+    if (temp.isEmpty) {
+      _countries = _countriesCopy;
+    } else {
+      for (int i = 0; i < _continentTracker.length; i++) {
+        if (_continentTracker[i]['selected'] == true) {
+          // print(_continentTracker[i]['key']);
+          // print('_countriesCopy: $_countriesCopy');
+          List<CountryModel> filter = _countriesCopy.where((country) {
+            final continentLower = country.continents!.first.toLowerCase();
+            final filterLower = _continentTracker[i]['key'].toLowerCase();
+            return continentLower.contains(filterLower);
+          }).toList();
+          _countries.addAll(filter);
+          print('filter: $filter');
+          bob = filter;
+        }
+        // _countries.add();
+      }
+    }
+    groupCountries(_countries);
+    _status = Status.success;
+    notifyListeners();
   }
 
   expand(int index) {
@@ -165,6 +207,7 @@ class HomeProvider extends ChangeNotifier {
           _timeZones.add(country.timezones![0]);
         }
       }
+      // _storageService.storeItem(key: 'countries', value: _countries);
       filterTracker();
       groupCountries(countries);
       _status = Status.success;

@@ -61,6 +61,7 @@ class Home extends StatelessWidget {
                 ),
               );
             }),
+            const YMargin(12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -215,21 +216,27 @@ class Home extends StatelessWidget {
                   return Column(
                     children: [
                       ExpansionTileWidget(
-                        listOfFilters: value.continent,
+                        listOfFilters: value.continentTracker,
                         hasExpanded: value.isExpanded[0],
                         onTap: () {
                           value.expand(0);
                         },
                         title: 'continent',
+
+                        // onCheckBoxTap: (() {}),
                       ),
-                      ExpansionTileWidget(
-                        listOfFilters: value.timeZones,
-                        hasExpanded: value.isExpanded[1],
-                        onTap: () {
-                          value.expand(1);
-                        },
-                        title: 'time zone',
-                      ),
+                      // ExpansionTileWidget(
+                      //   listOfFilters: value.timeZonesTracker,
+                      //   hasExpanded: value.isExpanded[1],
+                      //   onTap: () {
+                      //     value.expand(1);
+                      //   },
+                      //   title: 'time zone',
+                      //   // i: index,
+                      //   // onCheckBoxTap: (() {
+
+                      //   // }),
+                      // ),
                       const YMargin(8.0),
                       AnimatedContainer(
                         duration: const Duration(seconds: 1),
@@ -268,7 +275,10 @@ class Home extends StatelessWidget {
                               child: SizedBox(
                                 height: 40.0,
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    value.someMethod();
+                                    Navigator.pop(context);
+                                  },
                                   child: const Text('Show Results'),
                                 ),
                               ),
