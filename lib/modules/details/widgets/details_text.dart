@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class DetailsText extends StatelessWidget {
   final String keey;
-  final String value;
+  final String? value;
   const DetailsText({
     Key? key,
     required this.keey,
@@ -20,7 +20,7 @@ class DetailsText extends StatelessWidget {
             ),
         children: [
           TextSpan(
-            text: value,
+            text: value ?? 'N/A',
             style: Theme.of(context).textTheme.bodyText1!.copyWith(
                   fontWeight: FontWeight.w200,
                 ),

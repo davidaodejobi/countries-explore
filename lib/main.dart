@@ -1,5 +1,6 @@
 import 'package:explore/modules/home/view_model/home_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'l10n/l10n.dart';
@@ -8,8 +9,10 @@ import 'core/utils/theme.dart';
 import 'modules/home/home.dart';
 import 'modules/home/view_model/locale_provider.dart';
 
-void main() {
+void main() async {
   setup();
+  await Hive.initFlutter();
+  await Hive.openBox('settings');
   runApp(const Explore());
 }
 

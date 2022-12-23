@@ -72,13 +72,13 @@ class CountryModel {
     name = json['name'] != null ? Name.fromJson(json['name']) : null;
     // tld = json['tld'].cast<String>();
     tld = json['tld'] == null ? [] : List.from(json['tld'].map((x) => x));
-    cca2 = json['cca2'];
-    ccn3 = json['ccn3'];
-    cca3 = json['cca3'];
-    cioc = json['cioc'];
-    independent = json['independent'];
-    status = json['status'];
-    unMember = json['unMember'];
+    cca2 = json['cca2'] ?? '';
+    ccn3 = json['ccn3'] ?? '';
+    cca3 = json['cca3'] ?? '';
+    cioc = json['cioc'] ?? '';
+    independent = json['independent'] ?? false;
+    status = json['status'] ?? '';
+    unMember = json['unMember'] ?? false;
     currencies = json['currencies'] != null
         ? (json['currencies'] as Map<String, dynamic>).map(
             (k, v) => MapEntry(k, Curr.fromJson(v as Map<String, dynamic>)))
